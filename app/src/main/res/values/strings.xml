@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">kiosk</string>
+    <string name="kiosk_mode">Kiosk mode</string>
+    <string name="error_set_app_launcher">Set default app launcher</string>
+    <string name="error_no_permission_overlay">Permit drawing over other apps</string>
+</resources>
