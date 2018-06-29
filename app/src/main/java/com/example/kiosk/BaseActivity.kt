@@ -22,6 +22,10 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         registerKioskModeScreenOffReceiver()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON or
+                WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON)
     }
 
     override fun onResume() {
@@ -29,7 +33,7 @@ abstract class BaseActivity : AppCompatActivity() {
         if (!this.isAppLauncherDefault()
                 || Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && !Settings.canDrawOverlays(this)) {
-            //startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         } else {
             window.decorView.enableFullScreenMode()
             this.disablePullNotificationTouch(getOverlayColor())
@@ -91,7 +95,6 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     @Suppress("DEPRECATION")
     fun getWakeLock(): PowerManager.WakeLock? {
-        scheduleJob()
         if (wakeLock == null) {
             val powerManager = getSystemService(POWER_SERVICE) as PowerManager
             wakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "wakeup")
@@ -101,13 +104,5 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun getOverlayColor(): Int {
         return R.color.colorPrimaryDark
-    }
-
-    private fun scheduleJob() {
-        val jobId = 1001
-        val jobScheduler = getSystemService(Application.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val serviceName = ComponentName(this, KioskJobService::class.java)
-        val jobInfo = JobInfo.Builder(jobId, serviceName).build()
-        jobScheduler.schedule(jobInfo)
     }
 }
