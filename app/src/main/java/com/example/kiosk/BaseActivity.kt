@@ -1,17 +1,13 @@
 package com.example.kiosk
 
-import android.app.Application
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.PowerManager
 import android.provider.Settings
-import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import java.util.*
 
 abstract class BaseActivity : AppCompatActivity() {
